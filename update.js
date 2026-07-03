@@ -2,7 +2,7 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 
 const youtubeUrl = 'https://www.youtube.com/@lescopaque/live';
-const offlineVideoUrl = 'https://ziqryadam86-collab.github.io/asf-youtube-live/video_ok.mp4';
+const offlineVideoUrl = 'https://error-9vs.pages.dev/playlist.m3u8';
 
 async function main() {
     let realM3u8Url = "";
