@@ -2,8 +2,8 @@ name: Kemas Kini M3U8 YouTube
 
 on:
   schedule:
-    - cron: '*/5 * * * *' # Berjalan setiap 5 minit sekali (paling laju di GitHub)
-  workflow_dispatch: # Membolehkan anda tekan "Run workflow" secara manual bila-bila masa
+    - cron: '*/5 * * * *' # Berjalan setiap 5 minit sekali
+  workflow_dispatch: # Boleh run manual
 
 jobs:
   update-link:
@@ -20,7 +20,7 @@ jobs:
 
     - name: Install yt-dlp & Python
       run: |
-        sudo wget [https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp](https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp) -O /usr/local/bin/yt-dlp
+        sudo wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/local/bin/yt-dlp
         sudo chmod a+rx /usr/local/bin/yt-dlp
 
     - name: Bina fail cookies.txt dari GitHub Secret
@@ -38,6 +38,6 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git add chunklist.m3u8
-        git commit -m "Kemas kini chunklist.m3u8 dengan cookies (5 minit sekali)" || echo "Tiada perubahan"
+        git commit -m "Kemas kini chunklist.m3u8 dengan cookies (Fix Wget)" || echo "Tiada perubahan"
         git push
         
