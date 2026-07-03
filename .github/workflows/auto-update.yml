@@ -1,0 +1,43 @@
+name: Kemas Kini M3U8 YouTube
+
+on:
+  schedule:
+    - cron: '*/5 * * * *' # Berjalan setiap 5 minit sekali (paling laju di GitHub)
+  workflow_dispatch: # Membolehkan anda tekan "Run workflow" secara manual bila-bila masa
+
+jobs:
+  update-link:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout kod
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install yt-dlp & Python
+      run: |
+        sudo wget [https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp](https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp) -O /usr/local/bin/yt-dlp
+        sudo chmod a+rx /usr/local/bin/yt-dlp
+
+    - name: Bina fail cookies.txt dari GitHub Secret
+      run: |
+        echo "${{ secrets.YT_COOKIES }}" > cookies.txt
+
+    - name: Jalankan Skrip Kemas Kini Guna Cookies
+      run: node update.js
+
+    - name: Padam fail cookies.txt (Keselamatan)
+      run: rm -f cookies.txt
+
+    - name: Commit dan Push Perubahan
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add chunklist.m3u8
+        git commit -m "Kemas kini chunklist.m3u8 dengan cookies (5 minit sekali)" || echo "Tiada perubahan"
+        git push
+        
