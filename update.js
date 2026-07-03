@@ -1,7 +1,7 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
 
-const youtubeUrl = 'https://www.youtube.com/@lescopaque/live';
+const youtubeUrl = 'https://m.youtube.com/astroawani/live';
 const offlineVideoUrl = 'https://error-9vs.pages.dev/playlist.m3u8';
 
 async function main() {
